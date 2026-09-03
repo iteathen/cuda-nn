@@ -1,32 +1,34 @@
-schema: cuda-nn.next-step/0.1
-status: active
+schema: cuda-nn.next-step/0.2
+status: inference-gated
 updated: 2026-09-02
 
 current:
-  issue: 15
-  title: Bootstrap authority packet
+  issue: 2
+  title: Consumer-backed inference-layer justification
   outcome: >-
-    Review and integrate the documentation-only CUDA-NN ownership packet from
-    bootstrap/nn-owner-split-01, then reconcile CUDA-JS historical same-repository
-    NN authority under iteathen/CUDA-JS#165.
+    Compare direct product-to-CUDA-JS-Tensor composition with a reusable CUDA-NN
+    inference layer and retain only independently useful NN semantics. A conclusion
+    that direct Tensor composition is currently sufficient is valid.
 
 constraints:
   - No production NN source or public API before issue #2 resolves the consumer-backed inference-layer justification gate.
   - Open roadmap issues are not specifications or implementation authority.
   - Generic Tensor semantics remain owned by iteathen/CUDA-JS-Tensor.
-  - Generic CUDA/runtime/compiler/provider/resource mechanisms remain owned by iteathen/CUDA-JS.
+  - Generic RNG generator/distribution/reproducibility semantics remain owned by iteathen/cuda-rng.
+  - Generic communication group/collective/PGAS/RMA semantics remain owned by iteathen/cuda-comm.
+  - Generic CUDA/runtime/compiler/native-provider/resource mechanisms remain owned by iteathen/CUDA-JS.
   - Training, autodiff, provider breadth and distributed training are not inference prerequisites.
-  - Do not claim protected-main or repository-setting parity until GitHub settings/protection are changed and read back.
+  - Do not claim protected-main or repository-setting parity until issue #17 controls are changed and read back.
   - No Python, C/C++, CUDA C++, hand PTX, direct FFI/Driver access or private lower-layer imports in maintained CUDA-NN production paths.
 
 sequence:
-  - exact-head review bootstrap/nn-owner-split-01 against initial main
-  - integrate/read back bootstrap authority through PR without overstating unprotected main
-  - update CUDA-JS active authority under issue #165 to supersede same-repository NN placement while preserving historical ADR/SPEC provenance
-  - align CUDA-NN repository settings/protection when a supported settings write path is available
+  - integrate/read back issue #19 ownership reconciliation and ADR-0002
   - execute issue #2 inference-boundary assessment before any production NN implementation
+  - accept only the smallest consumer-backed NN specifications that survive the inference assessment
+  - keep training/provider/distributed lanes independently deferred until their own dependencies and authority are ready
+  - align CUDA-NN repository settings/protection under issue #17 when a supported settings write path is available
 
 blocked_implementation:
   reason: >-
-    Repository ownership is being established, and the reusable inference abstraction
-    has not yet been justified against direct product-to-Tensor composition.
+    The reusable inference abstraction has not yet been justified against direct
+    product-to-Tensor composition. Repository ownership alone is not implementation authority.
