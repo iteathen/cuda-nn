@@ -34,9 +34,9 @@ A capability moves downward only when its semantics are naturally consumer-neutr
 
 ## Repository mission
 
-CUDA-NN is the potential reusable neural-network semantic layer in the CUDA ecosystem. It is **not** the generic CUDA runtime and **not** the generic Tensor library.
+CUDA-NN is the potential reusable neural-network semantic layer in the CUDA ecosystem. It is **not** the generic CUDA runtime, generic Tensor library, generic RNG library, or generic communication library.
 
-Dependency direction is:
+Base dependency direction is:
 
 ```text
 cuda-nn
@@ -46,24 +46,35 @@ cuda-js-tensor
 cuda-js
 ```
 
-CUDA-MCGS is a sibling semantic framework. Product repositories such as UCI-Arena-Vector remain owners of concrete model/package/domain meaning.
+Optional semantic composition, only when an accepted NN profile needs it:
+
+```text
+cuda-nn -> cuda-rng   (generator/distribution/reproducibility semantics)
+cuda-nn -> cuda-comm  (collective/P2P/PGAS/RMA communication semantics)
+```
+
+Those optional dependencies do not reverse direction and do not make CUDA-NN their semantic owner. CUDA-MCGS is a sibling semantic framework. Product repositories such as UCI-Arena-Vector remain owners of concrete model/package/domain meaning.
 
 ### CUDA-NN may own, when justified by accepted contracts
 
 - reusable model/layer/NN graph semantics;
 - parameter and NN-state roles above generic Tensor values;
 - provider-neutral inference composition and NN execution planning;
-- autodiff, gradients, losses, optimizers, training RNG, checkpoints and training lifecycle;
+- autodiff, gradients, losses, optimizers, checkpoints and training lifecycle;
+- NN-specific stochastic policy and association of accepted RNG streams/state with initializers, dropout, sampling or training steps;
+- NN-specific distributed-training meaning such as gradient aggregation/update ordering, global-batch equivalence and checkpoint/world-state semantics;
 - NN-specific provider selection/mapping and conformance.
 
 ### CUDA-NN does not own
 
-- CUDA threads/blocks/warps, launch mechanics, atomics/barriers, compiler/linker/artifact mechanics, memory allocation/views, streams/events/operations, provider handles or generic resource lifecycle — `iteathen/CUDA-JS`;
-- generic Tensor dtype/shape/layout/view/broadcast/reduction/matmul/gather/concat/convolution/fusion semantics — `iteathen/CUDA-JS-Tensor` when naturally generic;
+- CUDA threads/blocks/warps, launch mechanics, atomics/barriers, compiler/linker/artifact mechanics, memory allocation/views, streams/events/operations, native provider handles or generic resource lifecycle — `iteathen/CUDA-JS`;
+- generic Tensor dtype/shape/layout/view/broadcast/reduction/matmul/gather/concat/convolution/fusion/FFT/sparse/solver semantics — `iteathen/CUDA-JS-Tensor` when naturally generic;
+- reusable generator/distribution/seed/split/reproducibility semantics — `iteathen/cuda-rng`;
+- reusable group/team/rank, collective/P2P/PGAS/RMA communication semantics — `iteathen/cuda-comm`;
 - graph-search/evaluator/progress/search-session semantics — `iteathen/CUDA-MCGS`;
 - concrete model architecture/package provenance, feature encoding, policy/action mapping, output-head meaning, chess/UCI or product tolerances — downstream product owners.
 
-If implementation pressure suggests C/C++, CUDA C++, hand PTX, direct FFI/Driver access, a private/deep lower-layer import, duplicated launch/provider/resource lifecycle, or an awkward workaround around a public lower-layer gap, **stop at that boundary and classify ownership first**. Route genuine generic gaps to the natural lower-layer repository.
+If implementation pressure suggests C/C++, CUDA C++, hand PTX, direct FFI/Driver access, a private/deep lower-layer import, duplicated launch/provider/resource lifecycle, or an awkward workaround around a public lower-layer gap, **stop at that boundary and classify ownership first**. Route genuine generic gaps to the natural lower or sibling semantic owner.
 
 ## Current implementation gate
 
@@ -83,14 +94,15 @@ Maintained CUDA-NN production source must not contain C, C++, CUDA C++, `.cu`/`.
 
 - Do not deep-import sibling repositories or their private paths.
 - Do not copy lower-layer schema/limit/provider facts into CUDA-NN as new authority.
-- Public compatibility records must identify exact consumed lower-layer contract/package revisions when material.
+- Do not recreate RNG or communication semantic state machines that belong to `cuda-rng` or `cuda-comm`.
+- Public compatibility records must identify exact consumed lower-layer/semantic contract revisions when material.
 - Preserve exact ownership of failure, cancellation, pressure, cleanup and unproved-resource state; never fabricate successful cleanup or intact mutable training state.
 - Finite resources, bounds and lifecycle are mandatory for every accepted mutable/native-backed capability.
 - Provider availability never authorizes provider-specific semantics in a generic contract.
 
 ## Implementation authorization
 
-No production component enters the repository until its semantic owner, dependencies, finite lifecycle, errors, compatibility, deletion behavior and decisive falsifiers are accepted in repository authority. Open issues #3–#14 are roadmap/assessment trackers, not implementation specifications.
+No production component enters the repository until its semantic owner, dependencies, finite lifecycle, errors, compatibility, deletion behavior and decisive falsifiers are accepted in repository authority. Open roadmap issues are planning/assessment trackers, not implementation specifications.
 
 ## Validation and review
 
