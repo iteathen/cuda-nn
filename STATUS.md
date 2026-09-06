@@ -1,14 +1,16 @@
 # CUDA-NN Status
 
-**Updated:** 2026-09-02
+**Updated:** 2026-09-05
 
 ## Current state
 
-CUDA-NN has an **integrated architecture/governance owner** at `main@7d7854697049db38e4a0670b80df9d600cd442c3`. There is no production NN source, package, public API, provider implementation, native qualification, training implementation or performance claim.
+CUDA-NN has an **integrated architecture/governance owner**. The current governance baseline includes the optional RNG/communication composition reconciliation at `main@ac97fee981b7789e11af2ec4a7ca40799eb08ddd`.
 
-CUDA-JS completed the matching repository-placement reconciliation through PR #167 / issue #165 at protected `main@9501b1790ddbe94d0254d89dc33ee6d19f2587f9`. Historical CUDA-JS ADR-0004/SPEC-0027 remain provenance only for their superseded same-repository placement.
+There is still no production NN source, package, public API, provider implementation, native qualification, training implementation or performance claim.
 
-Issue #2 remains the required consumer-backed inference-layer justification gate before production NN implementation.
+CUDA-JS completed the matching repository-placement reconciliation through its accepted external-NN ownership authority. Historical CUDA-JS ADR-0004/SPEC-0027 remain provenance only for their superseded same-repository placement.
+
+Issue #2 remains the required consumer-backed inference-layer justification gate before production NN implementation. UCI-Arena-Vector is the first concrete model consumer: its protected LatticeKnight mapping is now specific enough to test whether a reusable NN layer adds independent model/layer/inference semantics or merely renames Tensor operations. A valid outcome is that direct product-to-Tensor composition remains sufficient and production CUDA-NN inference stays deferred.
 
 ## Ownership
 
@@ -16,17 +18,28 @@ Issue #2 remains the required consumer-backed inference-layer justification gate
 - CUDA-JS-Tensor owns generic Tensor dtype/shape/layout/math/planning/execution.
 - `cuda-rng` owns reusable generator/distribution/seed/split/reproducibility semantics.
 - `cuda-comm` owns reusable group/team/rank, collective/P2P/PGAS/RMA communication semantics.
-- CUDA-NN may own reusable model/layer/inference/autodiff/training meaning only through accepted CUDA-NN contracts, including the NN-specific policy that consumes RNG/communication semantics.
+- CUDA-NN may own reusable model/layer/inference/autodiff/training meaning only through accepted CUDA-NN contracts, including NN-specific policy that consumes RNG/communication semantics without absorbing those reusable semantic owners.
 - CUDA-MCGS owns search semantics.
 - downstream products retain concrete model/domain meaning.
 
+ADR-0002 now records the optional composition rule: accepted NN profiles may depend on `cuda-rng` and/or `cuda-comm`, but CUDA-NN does not recreate their generator/distribution/reproducibility or communication/group/collective/PGAS/RMA state machines. CUDA-JS still owns the lower native/provider/device/resource mechanics behind any future accelerated realization.
+
 ## Repository governance state
 
-The repository settings remain **not yet aligned** with the established CUDA repositories. Current live readback still shows merge commits enabled, auto-merge disabled and update-branch disabled, while `main` remains unprotected. Issue #17 owns this control-plane gap. Do not claim parity until settings and protection are changed and read back.
+The repository settings remain **not yet aligned** with the established protected CUDA repositories. Current live readback still shows `main` unprotected and issue #17 owns the control-plane gap. Do not describe CUDA-NN as protected-main or repository-setting parity until those settings are changed and read back.
 
 ## Current authority
 
-Root `AGENTS.md`, `docs/PROJECT_CHARTER.md`, ADR-0001 and, after issue #19 integration, ADR-0002 define the current ownership/dependency model. Open roadmap issues are not specifications.
+Root `AGENTS.md`, `docs/PROJECT_CHARTER.md`, ADR-0001 and integrated ADR-0002 define the current ownership/dependency model. Open roadmap issues are planning/assessment trackers, not implementation specifications.
+
+## Current executable decision gate
+
+Issue #2 should compare, against the concrete Vector model evidence:
+
+1. direct product -> CUDA-JS-Tensor composition; and
+2. a minimal reusable CUDA-NN inference layer above Tensor.
+
+Retain only concepts with independent NN meaning that survive first-consumer deletion, improve ownership/reuse/testability, and do not hide product model/head/provenance semantics. Reject abstractions that merely rename generic Tensor operations. Training, autodiff, provider breadth and distributed training are not prerequisites for deciding this inference boundary.
 
 ## Explicit non-claims
 
