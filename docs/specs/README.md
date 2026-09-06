@@ -1,7 +1,9 @@
 # CUDA-NN specifications
 
-**No production component or API specification is accepted yet.**
+**Architecture/ownership authority is accepted; production NN specifications remain separately gated.**
 
-The [inference justification assessment](https://github.com/iteathen/cuda-nn/issues/2) first determines whether a reusable NN layer adds value beyond direct Tensor composition. Retained capabilities then require accepted contracts and appropriate qualification under [AGENTS.md](../../AGENTS.md).
+- [`SPEC-0001-native-boundary-and-js-only-implementation.md`](SPEC-0001-native-boundary-and-js-only-implementation.md) — accepted cross-cutting rule that CUDA-NN remains JavaScript/TypeScript, CUDA-JS owns native CUDA/provider integration, and NN semantics/planning stay above the native boundary. This specification does not authorize production NN implementation.
 
-The [architecture decisions](../decisions/README.md) establish ownership and optional RNG/communication composition. Roadmap issues organize work and do not authorize implementation. Historical CUDA-JS SPEC-0027 does not govern this repository.
+The [bootstrap and activation program](https://github.com/iteathen/cuda-nn/issues/1) organizes assessment. Production implementation still requires bounded, consumer-backed semantic contracts accepted under the [development instructions](../../AGENTS.md).
+
+Start with the [project charter](../PROJECT_CHARTER.md) and [architecture decisions](../decisions/README.md) to understand the intended scope.
