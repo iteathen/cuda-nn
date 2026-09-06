@@ -28,6 +28,12 @@ Before changing code or contracts, inspect the actual current repository state, 
 
 Use **LEGO → SOLID → CUPID → KISS**.
 
+LEGO is the outer architecture rule: it governs semantic ownership, universality, replaceability, scope containment, damage-limiting encapsulation, supported connection surfaces, and context containment. **The application/system itself is the outermost LEGO.** Its supported external inputs, outputs, commands, events, data contracts, and lifecycle entry/exit points are its public **studs/surfaces**. Large sections, subsystems, components, and large objects should preferentially compose smaller child LEGOs when that preserves cohesion; the parent owns the external responsibility and hides child topology.
+
+A LEGO is too large when one agent cannot hold its complete authoritative working set—contract/studs/surfaces, implementation, invariants, lifecycle/resource/failure rules, tests/conformance, and immediate dependency/consumer interfaces—in focused attention with substantial headroom for reasoning and review. Context fit is therefore a first-class boundary criterion alongside semantic, lifecycle, resource/failure, substitution, and change cohesion. When that envelope is exceeded, recursively split at the strongest real seam or narrow scope; do not create arbitrary modules that duplicate truth or require cross-boundary knowledge of internals. Callers connect through deliberate studs/surfaces and never drill through a parent to couple directly to a private child.
+
+Inside a valid LEGO, use SOLID to structure responsibilities and dependency direction, CUPID to shape the implementation, and KISS only to remove remaining unjustified complexity. A lower-level principle may not defeat a higher-level one.
+
 One semantic fact, state machine, lifecycle, resource, compatibility fact or failure meaning has one visible owner. Prefer small independently replaceable bricks and explicit ports over duplicated interpreters, hidden coupling, cross-layer convenience or speculative abstraction.
 
 A capability moves downward only when its semantics are naturally consumer-neutral. First-consumer pressure is evidence to assess ownership, not permission to contaminate a lower layer.
