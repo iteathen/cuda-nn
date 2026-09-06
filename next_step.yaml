@@ -1,52 +1,62 @@
 schema: cuda-nn.next-step/0.3
-status: inference-gated
-updated: 2026-09-05
+status: parked-awaiting-consumer-evidence
+updated: 2026-09-06
 
 current:
-  issue: 2
-  title: Consumer-backed inference-layer justification
+  issue: null
+  title: No active production work
   evidence_consumer: iteathen/UCI-Arena-Vector#3
   outcome: >-
-    Compare direct product-to-CUDA-JS-Tensor composition with a reusable CUDA-NN
-    inference layer using the concrete protected LatticeKnight model mapping. Retain
-    only independently useful NN semantics. A conclusion that direct Tensor composition
-    is currently sufficient is valid and leaves production CUDA-NN inference deferred.
+    The first real consumer gate is complete. Direct product-to-CUDA-JS-Tensor
+    composition is sufficient for the frozen LatticeKnight model and no reusable
+    NN semantic layer has been demonstrated. Production CUDA-NN inference remains
+    deferred; dependent inference/training/provider/optimization issues are dormant.
 
 integrated_baseline:
-  - ADR-0001 owns the independent reusable NN semantic repository boundary.
+  - Accepted SPEC-0001 owns the independent reusable NN semantic repository boundary and JS/TS-only implementation rule.
   - >-
-    ADR-0002 is integrated: optional accepted NN profiles may consume reusable RNG
-    semantics from iteathen/cuda-rng and reusable communication semantics from
-    iteathen/cuda-comm without absorbing either semantic owner.
+    ADR-0002 permits future accepted NN profiles to consume reusable RNG semantics
+    from iteathen/cuda-rng and communication semantics from iteathen/cuda-comm
+    without absorbing either owner.
   - >-
-    main@ac97fee981b7789e11af2ec4a7ca40799eb08ddd is the current recorded governance
-    provenance before this documentation reconciliation; exact live identity is read
-    from GitHub when needed.
+    Issue #2 completed the first-consumer justification gate with direct Tensor
+    composition selected for the demonstrated model; issue #17 completed repository
+    control-plane alignment and protected-main readback.
+  - >-
+    Exact live protected repository identity is read from GitHub when needed and is
+    not duplicated in this durable next-step file.
 
 constraints:
-  - No production NN source or public API before issue #2 resolves the consumer-backed inference-layer justification gate.
-  - Open roadmap issues are not specifications or implementation authority.
+  - No production NN source or public API is authorized from the current evidence.
+  - Closed dormant roadmap/feature issues are retained research, not implementation authority.
   - Generic Tensor semantics remain owned by iteathen/CUDA-JS-Tensor.
   - Generic RNG generator/distribution/reproducibility semantics remain owned by iteathen/cuda-rng.
   - Generic communication group/collective/PGAS/RMA semantics remain owned by iteathen/cuda-comm.
-  - Generic CUDA/runtime/compiler/native-provider/resource mechanisms remain owned by iteathen/CUDA-JS.
-  - Training, autodiff, provider breadth and distributed training are not inference prerequisites.
-  - Do not claim protected-main or repository-setting parity until issue #17 controls are changed and read back.
-  - No Python, C/C++, CUDA C++, hand PTX, direct FFI/Driver access or private lower-layer imports in maintained CUDA-NN production paths.
+  - All native CUDA/runtime/compiler/provider/resource mechanisms remain owned by iteathen/CUDA-JS.
+  - Maintained CUDA-NN source/reference code is JavaScript/TypeScript plus restricted Device-JS only.
+  - No Python, C/C++, CUDA C++, hand PTX, direct FFI/Driver access or private lower-layer imports in maintained CUDA-NN paths.
+  - Training, autodiff, provider breadth and distributed training require independent reactivation evidence and are not implied by repository existence.
+
+reactivation:
+  require: >-
+    A materially different consumer or repeated cross-product semantics must
+    demonstrate reusable NN meaning beyond direct Tensor composition.
+  tests:
+    - The proposed concept is not generic Tensor mathematics or planning.
+    - The proposed concept is not a native CUDA/provider mechanism.
+    - The proposed concept is not product-specific model/checkpoint/head meaning.
+    - The abstraction survives first-consumer deletion and materially improves ownership, reuse, or testability.
+  action: >-
+    Reopen the inference justification gate or create a bounded successor, then
+    accept only the smallest consumer-backed semantic specification before source/API work.
 
 sequence:
-  - >-
-    Execute issue #2 against the concrete Vector model evidence: classify every proposed
-    reusable concept as CUDA-JS, Tensor, CUDA-NN or product-owned and compare direct
-    Tensor composition with the smallest coherent NN layer.
-  - >-
-    Accept only the smallest consumer-backed NN specifications that survive first-consumer
-    deletion and are not generic Tensor/RNG/communication/CUDA semantics.
-  - Keep training/provider/distributed lanes independently deferred until their own dependencies and authority are ready.
-  - Align CUDA-NN repository settings/protection under issue #17 when a supported settings write path is available.
+  - No implementation action while parked.
+  - Preserve the repository as the reserved semantic owner without speculative production surface.
+  - Reassess only when the reactivation criteria are met by concrete consumer evidence.
 
 blocked_implementation:
   reason: >-
-    The reusable inference abstraction has not yet been justified against direct
-    product-to-Tensor composition. Integrated ownership and optional RNG/COMM composition
-    establish semantic boundaries, not production implementation authority.
+    The demonstrated first real consumer does not require a reusable NN layer above
+    CUDA-JS-Tensor. Repository ownership is reserved for future evidence, not active
+    production implementation.
