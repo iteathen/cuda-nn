@@ -1,59 +1,23 @@
 # CUDA-NN
 
-CUDA-NN is the independent repository for **reusable neural-network semantics** in the CUDA-JS ecosystem.
+CUDA-NN is a planned JavaScript library for reusable neural-network models, layers, and inference above CUDA-JS-Tensor.
 
-## Current status
+## Current state
 
-**Architecture/governance is integrated. No production NN package, public NN API, native/provider support, training implementation, or performance claim exists yet.**
+The repository contains an accepted charter and architecture decisions, development guidance, and planning records. **There is no production NN implementation, public API, or package yet.** Native-provider support, training, and performance are not established.
 
-The repository gives NN semantics a natural owner instead of placing them inside the generic CUDA-JS runtime. Production implementation remains gated by issue #2: a reusable NN layer must show value beyond a product directly composing `cuda-js-tensor` programs.
+Before implementation, the [inference justification assessment](https://github.com/iteathen/cuda-nn/issues/2) must establish what a reusable NN layer contributes beyond applications composing Tensor programs directly. Keeping direct Tensor composition is a valid outcome.
 
-## Ownership stack
+## Intended scope
 
-```text
-CUDA-JS
-  generic CUDA runtime/compiler/Device-JS/memory/execution/provider mechanisms
-        ↑
-CUDA-JS-Tensor
-  generic tensor dtype/shape/layout/math/planning/execution
-        ↑
-CUDA-NN
-  reusable model/layer/inference/autodiff/training semantics
-```
+The initial aim is reusable model/layer representation and inference composition. Autodiff and training are deferred and require separate justification.
 
-Optional semantic dependencies are selected only by accepted NN profiles:
+Generic tensor mathematics belongs to [CUDA-JS-Tensor](https://github.com/iteathen/CUDA-JS-Tensor), while [CUDA-JS](https://github.com/iteathen/CUDA-JS) owns GPU runtime/provider mechanisms. Optional random-generation and communication behavior would use CUDA-RNG and CUDA-COMM; specific models and application outputs remain with consumers.
 
-```text
-CUDA-NN -> cuda-rng   reusable RNG/distribution/reproducibility semantics
-CUDA-NN -> cuda-comm  reusable collective/P2P/PGAS/RMA communication semantics
-```
+## Start here
 
-CUDA-NN retains the NN-specific reason those capabilities matter: initializer/dropout/sampling/training stochastic policy and distributed-training gradient/global-batch/checkpoint semantics. CUDA-JS retains native/provider/device/resource mechanisms such as cuRAND/NCCL/NVSHMEM/TensorRT lower resources.
-
-CUDA-MCGS is a sibling search-semantic framework. Concrete products such as UCI-Arena-Vector retain model-package provenance, feature encoding, policy/action mapping, output-head meaning and other product semantics.
-
-## What belongs here
-
-Only reusable NN meaning that survives first-consumer deletion: model/layer graph semantics, parameter roles, inference composition, NN-specific lowering/provider selection, and—when independently justified—autodiff, gradients, optimizers, NN stochastic policy, checkpoints, distributed-training policy and training lifecycle.
-
-Generic CUDA mechanisms route to [`iteathen/CUDA-JS`](https://github.com/iteathen/CUDA-JS). Generic Tensor mathematics routes to [`iteathen/CUDA-JS-Tensor`](https://github.com/iteathen/CUDA-JS-Tensor). Reusable RNG semantics route to [`iteathen/cuda-rng`](https://github.com/iteathen/cuda-rng); reusable communication semantics route to [`iteathen/cuda-comm`](https://github.com/iteathen/cuda-comm).
-
-## Development authority
-
-Read [`AGENTS.md`](AGENTS.md) first. The project charter is [`docs/PROJECT_CHARTER.md`](docs/PROJECT_CHARTER.md). [`ADR-0001`](docs/decisions/ADR-0001-independent-nn-semantic-owner.md) owns the independent NN repository split and [`ADR-0002`](docs/decisions/ADR-0002-rng-comm-semantic-composition.md) owns optional RNG/COMM composition.
-
-Open issues are planning/tracking artifacts, not implementation specifications. Issue #2 must resolve the inference-layer justification question before production NN source is authorized.
-
-## Current roadmap
-
-- #2 — consumer-backed inference-layer justification gate;
-- #3–#9 — potential NN value/graph/lowering/memory/data/execution semantics;
-- #10 — deferred training state;
-- #11–#12 — deferred provider mapping/fusion research;
-- #13 — inference-first qualification;
-- #14 — deferred distributed training over `cuda-comm` semantics and CUDA-JS native mechanisms;
-- #17 — repository controls/protected `main`;
-- #18 — deferred TensorRT semantic eligibility/equivalence;
-- #19 — RNG/COMM ownership reconciliation represented by ADR-0002 after integration.
-
-The roadmap is intentionally inference-first. Training/autodiff/provider breadth is not required merely because the repository exists.
+- [Current status](STATUS.md) and [project charter](docs/PROJECT_CHARTER.md).
+- [Architecture decisions](docs/decisions/README.md) and [specification status](docs/specs/README.md).
+- [Development instructions](AGENTS.md) and [shared contribution guide](https://github.com/iteathen/.github/blob/main/CONTRIBUTING.md).
+- [Private security reporting](https://github.com/iteathen/.github/blob/main/SECURITY.md).
+- [License](LICENSE).
