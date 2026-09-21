@@ -1,0 +1,24 @@
+{
+  "schema_version": "1.0",
+  "repository": "iteathen/cuda-nn",
+  "claims": [
+    {
+      "id": "CUDA-NN-PLAN-001",
+      "claim": "Intended project scope is reusable neural-network model/layer representation and inference composition above CUDA-JS-Tensor.",
+      "evidence_class": "UNVALIDATED",
+      "status": "planning",
+      "oracle": "Repository charter, architecture decisions, and inference-justification gate",
+      "revision": "main",
+      "falsifier": "An accepted project decision materially changes the intended scope or concludes that a reusable NN layer is not justified.",
+      "evidence": [
+        "README.md",
+        "STATUS.md",
+        "docs/PROJECT_CHARTER.md"
+      ],
+      "limitations": [
+        "No production NN implementation, public API, training support, native-provider support, or performance is established."
+      ],
+      "external_reproduction": false
+    }
+  ]
+}
